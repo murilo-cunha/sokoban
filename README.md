@@ -43,7 +43,7 @@ Sokoban (倉庫番, "warehouse keeper") is a puzzle game where the player pushes
 
 ## Adding More Levels
 
-You can add more levels by extending the `levels` list in the `Sokoban` class. 
+You can add more levels by extending the `levels` list in the `Sokoban` class.
 Use these values to define your custom levels:
 - 0: Empty space
 - 1: Wall

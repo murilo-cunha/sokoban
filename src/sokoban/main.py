@@ -1,8 +1,13 @@
+"""Main module for the Sokoban game implementation."""
+
 import pyxel
 
 
 class Sokoban:
-    def __init__(self):
+    """A Sokoban puzzle game implementation using Pyxel."""
+
+    def __init__(self) -> None:
+        """Initialize the Sokoban game with default settings."""
         # Game settings
         self.TITLE = "Sokoban"
         self.WIDTH = 128
@@ -24,6 +29,14 @@ class Sokoban:
         self.PLAYING = 0
         self.COMPLETED = 1
 
+        # Tile types
+        self.EMPTY = 0
+        self.WALL = 1
+        self.PLAYER = 2
+        self.BOX = 3
+        self.TARGET = 4
+        self.BOX_ON_TARGET = 5
+
         # Player position
         self.player_x = 0
         self.player_y = 0
@@ -31,6 +44,11 @@ class Sokoban:
         # Level data
         self.current_level = 0
         self.game_state = self.PLAYING
+
+        # Game objects
+        self.boxes: list[tuple[int, int]] = []
+        self.targets: list[tuple[int, int]] = []
+        self.grid: list[list[int]] = []
 
         # Define levels (0=empty, 1=wall, 2=player, 3=box, 4=target, 5=box on target)
         self.levels = [
@@ -63,8 +81,8 @@ class Sokoban:
         pyxel.init(self.WIDTH, self.HEIGHT, title=self.TITLE, fps=self.FPS)
         pyxel.run(self.update, self.draw)
 
-    def init_game(self):
-        """Initialize the game state with the current level"""
+    def init_game(self) -> None:
+        """Initialize the game state with the current level."""
         self.grid = [row[:] for row in self.levels[self.current_level]]
         self.boxes = []
         self.targets = []
@@ -72,23 +90,23 @@ class Sokoban:
         # Find player, boxes and targets
         for y in range(len(self.grid)):
             for x in range(len(self.grid[y])):
-                if self.grid[y][x] == 2:
+                if self.grid[y][x] == self.PLAYER:
                     self.player_x = x
                     self.player_y = y
-                    self.grid[y][x] = 0
-                elif self.grid[y][x] == 3:
+                    self.grid[y][x] = self.EMPTY
+                elif self.grid[y][x] == self.BOX:
                     self.boxes.append((x, y))
-                    self.grid[y][x] = 0
-                elif self.grid[y][x] == 4:
+                    self.grid[y][x] = self.EMPTY
+                elif self.grid[y][x] == self.TARGET:
                     self.targets.append((x, y))
-                    self.grid[y][x] = 0
-                elif self.grid[y][x] == 5:
+                    self.grid[y][x] = self.EMPTY
+                elif self.grid[y][x] == self.BOX_ON_TARGET:
                     self.boxes.append((x, y))
                     self.targets.append((x, y))
-                    self.grid[y][x] = 0
+                    self.grid[y][x] = self.EMPTY
 
-    def update(self):
-        """Update game state"""
+    def update(self) -> None:  # noqa: C901, PLR0912
+        """Update the game state based on user input and game logic."""
         if self.game_state == self.COMPLETED:
             # R key to restart level
             if pyxel.btnp(pyxel.KEY_R):
@@ -118,7 +136,7 @@ class Sokoban:
         # If movement occurred
         if new_x != self.player_x or new_y != self.player_y:
             # Check for walls
-            if self.grid[new_y][new_x] == 1:
+            if self.grid[new_y][new_x] == self.WALL:
                 return
 
             # Check for boxes
@@ -134,7 +152,7 @@ class Sokoban:
                 box_new_y = new_y + (new_y - self.player_y)
 
                 # Check if new box position is valid
-                is_wall = self.grid[box_new_y][box_new_x] == 1
+                is_wall = self.grid[box_new_y][box_new_x] == self.WALL
                 is_box = any(
                     box_x == box_new_x and box_y == box_new_y
                     for box_x, box_y in self.boxes
@@ -157,15 +175,12 @@ class Sokoban:
         if pyxel.btnp(pyxel.KEY_R):
             self.init_game()
 
-    def check_win(self):
-        """Check if all boxes are on targets"""
-        for box in self.boxes:
-            if box not in self.targets:
-                return False
-        return True
+    def check_win(self) -> bool:
+        """Check if all boxes are on targets."""
+        return all(box in self.targets for box in self.boxes)
 
-    def draw(self):
-        """Draw the game state"""
+    def draw(self) -> None:
+        """Draw the game state to the screen."""
         pyxel.cls(self.COL_BACKGROUND)
 
         # Calculate offset to center the level
@@ -177,7 +192,7 @@ class Sokoban:
         # Draw walls
         for y in range(len(self.grid)):
             for x in range(len(self.grid[y])):
-                if self.grid[y][x] == 1:
+                if self.grid[y][x] == self.WALL:
                     pyxel.rect(
                         offset_x + x * self.TILE_SIZE,
                         offset_y + y * self.TILE_SIZE,

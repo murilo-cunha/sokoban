@@ -1,4 +1,6 @@
-from src.sokoban.main import Sokoban
+"""Entrypoint for the Sokoban game."""
 
-sokoban = Sokoban()
-sokoban.run()
+from sokoban.main import Sokoban
+
+if __name__ == "__main__":
+    sokoban = Sokoban()
