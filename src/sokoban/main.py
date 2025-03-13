@@ -10,7 +10,7 @@ class Sokoban:
         """Initialize the Sokoban game with default settings."""
         # Game settings
         self.TITLE = "Sokoban"
-        self.WIDTH = 128
+        self.WIDTH = 172
         self.HEIGHT = 128
         self.FPS = 30
 
@@ -258,6 +258,9 @@ class Sokoban:
             if self.current_level < len(self.levels) - 1:
                 next_level = "N: Next Level"
                 pyxel.text(self.WIDTH // 2 - len(next_level) * 2, 40, next_level, 7)
+            else:
+                congrats = "Congrats! That's all the levels!"
+                pyxel.text(self.WIDTH // 2 - len(congrats) * 2, 40, congrats, 7)
 
 
 if __name__ == "__main__":
