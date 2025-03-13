@@ -250,17 +250,17 @@ class Sokoban:
         # Draw game completed message
         if self.game_state == self.COMPLETED:
             message = "Level Complete!"
-            pyxel.text(self.WIDTH // 2 - len(message) * 2, 20, message, 7)
+            pyxel.text(self.WIDTH // 2 - len(message) * 2, 10, message, 7)
 
             instructions = "R: Restart"
-            pyxel.text(self.WIDTH // 2 - len(instructions) * 2, 30, instructions, 7)
+            pyxel.text(self.WIDTH // 2 - len(instructions) * 2, 20, instructions, 7)
 
             if self.current_level < len(self.levels) - 1:
                 next_level = "N: Next Level"
-                pyxel.text(self.WIDTH // 2 - len(next_level) * 2, 40, next_level, 7)
+                pyxel.text(self.WIDTH // 2 - len(next_level) * 2, 30, next_level, 7)
             else:
                 congrats = "Congrats! That's all the levels!"
-                pyxel.text(self.WIDTH // 2 - len(congrats) * 2, 40, congrats, 7)
+                pyxel.text(self.WIDTH // 2 - len(congrats) * 2, 30, congrats, 7)
 
 
 if __name__ == "__main__":
