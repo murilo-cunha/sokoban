@@ -208,10 +208,26 @@ class Sokoban:
             )
 
         # Draw player
+        # Calculate center position of the player's tile
+        player_center_x = (
+            offset_x + self.player_x * self.TILE_SIZE + self.TILE_SIZE // 2
+        )
+        player_center_y = (
+            offset_y + self.player_y * self.TILE_SIZE + self.TILE_SIZE // 2
+        )
+        # Draw horizontal part of the plus sign
         pyxel.rect(
-            offset_x + self.player_x * self.TILE_SIZE + 1,
-            offset_y + self.player_y * self.TILE_SIZE + 1,
+            player_center_x - (self.TILE_SIZE - 2) // 2,
+            player_center_y - 1,
             self.TILE_SIZE - 2,
+            2,
+            self.COL_PLAYER,
+        )
+        # Draw vertical part of the plus sign
+        pyxel.rect(
+            player_center_x - 1,
+            player_center_y - (self.TILE_SIZE - 2) // 2,
+            2,
             self.TILE_SIZE - 2,
             self.COL_PLAYER,
         )

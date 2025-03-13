@@ -1,9 +1,25 @@
 [project]
-name = "sokoban"
-version = "0.1.0"
-description = "Add your description here"
-readme = "README.md"
+authors         = [{name = "Murilo Cunha", email = "murilo.k.s.cunha95@gmail.com"}]
+dependencies    = ["pyxel>=2.3.8"]
+description     = "Sokoban game."
+name            = "sokoban"
+readme          = "README.md"
 requires-python = ">=3.13"
-dependencies = [
-    "pyxel>=2.3.8",
-]
+version         = "0.1.0"
+
+[dependency-groups]
+dev = ["pre-commit>=4.1.0"]
+
+[tool.ruff]
+fix            = true
+src            = ["src"]
+target-version = "py313"
+
+[tool.ruff.lint]
+ignore           = ["COM812", "D203", "D212", "FIX002", "PD901", "TD002", "TD003"]
+per-file-ignores = {"tests/*" = ["INP001", "S101"], "scripts/*" = ["INP001", "T201"]}
+select           = ["ALL"]
+
+[build-system]
+build-backend = "hatchling.build"
+requires      = ["hatchling"]
