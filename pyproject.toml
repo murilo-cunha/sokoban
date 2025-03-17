@@ -1,6 +1,6 @@
 [project]
 authors         = [{name = "Murilo Cunha", email = "murilo.k.s.cunha95@gmail.com"}]
-dependencies    = ["pyxel>=2.3.8"]
+dependencies    = ["pyxel>=2.3.15"]
 description     = "Sokoban game."
 name            = "sokoban"
 readme          = "README.md"
