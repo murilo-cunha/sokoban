@@ -60,13 +60,13 @@ jobs:
 
       - name: Build Pyxel application and convert to HTML
         run: |
-          pyxel package . app.py
-          pyxel app2html sokoban.pyxapp
+          pyxel package src src/sokoban/main.py
+          pyxel app2html src.pyxapp
 
       - name: Ensure HTML file is out/index.html
         run: |
           mkdir -p out
-          mv sokoban.html out/index.html
+          mv src.html out/index.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
